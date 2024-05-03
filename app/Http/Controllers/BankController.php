@@ -85,4 +85,17 @@ class BankController extends Controller
         }
         return null;  // Retorna null si no encuentra un IBAN válido
     }
+    public function validateIBAN(Request $request)
+    {
+        $iban = $request->input('iban');
+        $isValid = $this->validaIBAN($iban);
+        return back()->with('message', $isValid ? 'IBAN válido.' : 'IBAN inválido.');
+    }
+
+    public function discoverIBAN(Request $request)
+    {
+        $iban = $request->input('iban');
+        $result = $this->descobreixIBAN($iban);
+        return back()->with('message', $result ? "IBAN descubierto: $result" : 'No se pudo descubrir el IBAN.');
+    }
 }
